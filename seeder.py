@@ -9,9 +9,9 @@ students_collection = db["students"]  # Collection name
 students_data = [
     {
         "id": "1",
-        "name": "Alice Johnson",
+        "name": "Deepak Sharma",
         "age": 20,
-        "email": "alice.johnson@example.com",
+        "email": "deepak.sharma@example.com",
         "enrollment_date": "2022-09-01",
         "courses": ["Mathematics", "Computer Science"],
         "GPA": 3.8,
@@ -20,9 +20,9 @@ students_data = [
     },
     {
         "id": "2",
-        "name": "Bob Smith",
+        "name": "Ravi Patel",
         "age": 22,
-        "email": "bob.smith@example.com",
+        "email": "ravi.patel@example.com",
         "enrollment_date": "2021-09-01",
         "courses": ["Biology", "Chemistry"],
         "GPA": 3.5,
@@ -31,9 +31,9 @@ students_data = [
     },
     {
         "id": "3",
-        "name": "Charlie Brown",
+        "name": "Aarav Verma",
         "age": 19,
-        "email": "charlie.brown@example.com",
+        "email": "aarav.verma@example.com",
         "enrollment_date": "2023-09-01",
         "courses": ["History", "Political Science"],
         "GPA": 3.9,
@@ -42,9 +42,9 @@ students_data = [
     },
     {
         "id": "4",
-        "name": "Diana Green",
+        "name": "Sanya Iyer",
         "age": 21,
-        "email": "diana.green@example.com",
+        "email": "sanya.iyer@example.com",
         "enrollment_date": "2020-09-01",
         "courses": ["Physics", "Astronomy"],
         "GPA": 3.2,
@@ -53,9 +53,9 @@ students_data = [
     },
     {
         "id": "5",
-        "name": "Ethan White",
+        "name": "Kabir Singh",
         "age": 23,
-        "email": "ethan.white@example.com",
+        "email": "kabir.singh@example.com",
         "enrollment_date": "2019-09-01",
         "courses": ["Economics", "Philosophy"],
         "GPA": 3.1,
@@ -63,6 +63,7 @@ students_data = [
         "student_class": "Alumnus"
     }
 ]
+
 
 # Insert data into the collection
 students_collection.insert_many(students_data)
