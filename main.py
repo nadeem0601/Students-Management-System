@@ -22,6 +22,11 @@ async def root():
 async def fetch_all_students():
     return await db["students"].find({}, {"_id": 0}).to_list()
 
+@app.post("/students")
+async def create_student(student: dict):
+    student_id = await db["students"].insert_one(student)
+    return {"_id": str(student_id.inserted_id)}
+
 @app.get("/students/search")
 async def search_student(name: Optional[str] = "", email: Optional[str] = "", course: Optional[str] = "", status: Optional[str] = "", student_class: Optional[str] = ""):
     query = {}
