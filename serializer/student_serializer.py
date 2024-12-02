@@ -1,11 +1,10 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, field_validator
 from datetime import datetime
 from typing import List
 from datetime import datetime
 from bson import ObjectId
 
 class StudentBaseModel(BaseModel):
-    id: str = Field(alias="_id")
     name: str
     age: int
     email: str
