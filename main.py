@@ -53,8 +53,36 @@ async def enroll_student(student_id: str, course: str):
     student = await db["students"].find_one({"_id": ObjectId(student_id)}, {"_id": 0})
     if not student:
         raise HTTPException(status_code=404, detail="Student not found")
-    student.get("courses").append(course)
-    return {"msg": f"{course} enrolled successfully!", "student": student}
+    if course in student.get("courses", []):
+        raise HTTPException(status_code=400, detail=f"{course} already enrolled")
+    await db["students"].update_one({"_id": ObjectId(student_id)}, {"$push": {"courses": course}})
+    return {"msg": f"{course} enrolled successfully!"}
+
+@app.get("/students/{id}/courses")
+async def get_student_courses(id: str):
+    return await db["students"].find_one({"_id": ObjectId(id)}, {"courses": 1, "_id": 0})
+
+@app.delete("/students/{id}/courses")
+async def remove_student_course(id: str, course: str):
+    student = await db["students"].find_one({"_id": ObjectId(id)}, {"_id": 0})
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+    if course not in student.get("courses", []):
+        raise HTTPException(status_code=400, detail=f"{course} is not enrolled in this student")
+    result = await db["students"].update_one({"_id": ObjectId(id)}, {"$pull": {"courses": course}})
+    return {"msg": f"{course} removed successfully!", "student": result}
+
+@app.post("/students/{id}/graduation-status")
+async def update_graduation_status(id: str, status: str):
+    student = await db["students"].find_one({"_id": ObjectId(id)}, {"_id": 0})
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+    await db["students"].update_one({"_id": ObjectId(id)}, {"$set": {"status": status}})
+    return {"msg": f"Graduation status updated to {status}!"}
+
+@app.get("/students/{id}/graduation-status")
+async def get_graduation_status(id: str):
+    return await db["students"].find_one({"_id": ObjectId(id)}, {"name": 1, "enrollment_date": 1, "status": 1, "_id": 0})
 
 
 if __name__ == "__main__":
