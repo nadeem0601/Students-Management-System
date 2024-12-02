@@ -48,6 +48,14 @@ async def update_student(id: str, data: dict):
     result = await db["students"].update_one({"_id": ObjectId(id)}, {"$set": data})
     return result.modified_count > 0
 
+@app.post("/students/{student_id}/enroll")
+async def enroll_student(student_id: str, course: str):
+    student = await db["students"].find_one({"_id": ObjectId(student_id)}, {"_id": 0})
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+    student.get("courses").append(course)
+    return {"msg": f"{course} enrolled successfully!", "student": student}
+
 
 if __name__ == "__main__":
     import uvicorn
